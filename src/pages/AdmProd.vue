@@ -1,9 +1,4 @@
 <template>
-  <!-- <div class="fixed-top">
-    <Nav_Bar class="d-flex justify-content-between">
-      <MenuList />
-    </Nav_Bar>
-  </div> -->
   <div id="sect-1" class="d-flex justify-content-between align-items-center">
     <Btn_component @click="showAddModal" id="btn-w" />
     <Search_component @filter-result="handleFilteredResults" />
@@ -16,9 +11,6 @@
     />
     <AddProduct v-if="isAddModalVisible" @close="closeModal" />
     <AlertDelet v-if="isAlertVisible" :Id="selectIdProduct" @close="closeModal" />
-  </div>
-  <div v-if="loading">
-    <p>Loadin...</p>
   </div>
 
   <section id="container">
@@ -148,15 +140,12 @@ export default {
       isAlertVisible: false,
       selectProduct: null,
       selectIdProduct: null,
-      loading: false,
     };
   },
 
   components: {
-    // Nav_Bar,
     Search_component,
     Btn_component,
-    // MenuList,
     EditProduct,
     AddProduct,
     AlertDelet,
@@ -222,7 +211,6 @@ export default {
   },
 
   mounted() {
-    this.loading = false;
     this.loadingProducts();
   },
 };

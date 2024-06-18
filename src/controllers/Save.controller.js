@@ -2,8 +2,6 @@ import axios from "axios";
 import { BASE_URL } from "@/services/Serviceshttp.js";
 import { getConfigHttpReq } from "@/Variabe/APILogic";
 
-const token = localStorage.getItem('token');
-
 var config = getConfigHttpReq()
 
 export const saveProduct = async (product) => {
@@ -17,7 +15,7 @@ export const saveProduct = async (product) => {
   }
 
   return new Promise((resolve, reject) => {
-    if (!token) {
+    if (!config) {
         reject({
             data: {
                 code: 401,

@@ -24,7 +24,13 @@
                   class="form-control"
                   v-model="getNewProduct.Codigo"
                   placeholder="Enter product code"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  @input="clearError('error1')"
                 />
+                <div v-if="errors.error1" class="alert alert-danger">
+                  {{ errors.error1 }}
+                </div>
               </div>
             </div>
             <div class="row">
@@ -50,7 +56,13 @@
                     class="form-control"
                     v-model="getNewProduct.Precio"
                     placeholder="Enter product precie"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    @input="clearError('error2')"
                   />
+                  <div v-if="errors.error2" class="alert alert-danger">
+                    {{ errors.error2 }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -62,7 +74,13 @@
                     class="form-control"
                     v-model="getNewProduct.Categoria"
                     placeholder="Enter product category"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    @input="clearError('error3')"
                   />
+                  <div v-if="errors.error3" class="alert alert-danger">
+                    {{ errors.error3 }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -73,8 +91,14 @@
                     id="tipoEmp"
                     class="form-control"
                     v-model="getNewProduct.TipoEmpaque"
-                    placeholder="Enter product category"
+                    placeholder="Enter product packaging type"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    @input="clearError('error4')"
                   />
+                  <div v-if="errors.error4" class="alert alert-danger">
+                    {{ errors.error4 }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -90,6 +114,7 @@
                 ></textarea>
               </div>
             </div>
+            <div v-if="msg" class="alert alert-danger">{{ msg }}</div>
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-end">
@@ -124,12 +149,19 @@ export default {
   data() {
     return {
       getNewProduct: {
-        Codigo: "",
+        Codigo: null,
         Nombre: "",
-        Precio: "",
+        Precio: null,
         Descripcion: "",
-        Categoria: "",
-        TipoEmpaque: "",
+        Categoria: null,
+        TipoEmpaque: null,
+      },
+      msg: "",
+      errors: {
+        error1: "",
+        error2: "",
+        error3: "",
+        error4: "",
       },
     };
   },
@@ -140,9 +172,51 @@ export default {
     },
 
     saveChanges() {
+      this.errors = {
+        error1: "",
+        error2: "",
+        error3: "",
+        error4: "",
+      };
+
+      if (
+        !this.getNewProduct.Codigo ||
+        !this.getNewProduct.Categoria ||
+        !this.getNewProduct.Descripcion ||
+        !this.getNewProduct.Nombre ||
+        !this.getNewProduct.Precio ||
+        !this.getNewProduct.TipoEmpaque
+      ) {
+        this.mgs = "Por favor complete todos los campos";
+        return;
+      }
+
+      this.msg = "";
+
+      if (isNaN(this.getNewProduct.Codigo)) {
+        this.errors.error1 = "Product code must be a valid number.";
+        return;
+      }
+      if (isNaN(this.getNewProduct.Precio)) {
+        this.errors.error2 = "Product price must be a valid number.";
+        return;
+      }
+      if (isNaN(this.getNewProduct.Categoria)) {
+        this.errors.error3 = "Product category must be a valid number.";
+        return;
+      }
+      if (isNaN(this.getNewProduct.TipoEmpaque)) {
+        this.errors.error4 = "Packaging type must be a valid number.";
+        return;
+      }
+
       saveProduct(this.getNewProduct);
       this.closeAddModal();
       console.log(this.getNewProduct);
+    },
+
+    clearError(err) {
+      this.errors[err] = "";
     },
   },
 };

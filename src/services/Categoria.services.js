@@ -1,8 +1,8 @@
 import axios from "axios";
 import { BASE_URL } from "./Serviceshttp";
-import { getConfigHttpReq } from "@/Variabe/APILogic";
+import { getConfigHttpReq} from "@/Variabe/APILogic";
 
-var config = getConfigHttpReq()
+var config = getConfigHttpReq() 
 
 const getCategoria = async () => {
     try {

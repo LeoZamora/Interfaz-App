@@ -55,6 +55,7 @@
 import Nav_Bar from "@/components/Nav_Bar.vue";
 import { getUser, loginUser } from "@/services/User.services";
 import { mapActions } from "vuex";
+import { deleteConfigAuth } from "../Variabe/APILogic.js";
 
 export default {
   name: "LoginVue",
@@ -101,9 +102,14 @@ export default {
           this.$router.push({ name: "home" });
         }
       } catch (error) {
-        throw new Error(error);
+        this.error = "Error en la conexion a la Base de datos";
       }
+      this.error = "";
     },
+  },
+
+  mounted() {
+    deleteConfigAuth();
   },
 };
 </script>

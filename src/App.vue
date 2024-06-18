@@ -2,9 +2,13 @@
   <div class="wrapper">
     <Nav_Bar class="navbar" v-if="isLoggedIn">
       <MenuList />
+      <button id="btn-out" class="btn" type="button" @click="showAlert">
+        <i class="bi bi-box-arrow-in-left"></i>
+      </button>
     </Nav_Bar>
+    <AlertLogout v-if="isVisisible" @close="closeModal" />
     <div class="sidebar" v-if="isLoggedIn">
-      <Side_BarComponent />
+      <Side_BarComponent v-if="isLoggedIn" />
     </div>
     <main class="main"><router-view /></main>
     <Footer_component class="footer" v-if="isLoggedIn" />
@@ -16,16 +20,16 @@ import MenuList from "@/widgets/MenuList.vue";
 import Footer_component from "./components/Footer_component.vue";
 import Side_BarComponent from "./components/Side_Bar.component.vue";
 import Nav_Bar from "@/components/Nav_Bar.vue";
+import AlertLogout from "./widgets/AlertLogout.vue";
 
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
 
   data() {
     return {
-      isSideBarVisible: false,
-      isNavbarVisible: false,
+      isVisisible: false,
     };
   },
 
@@ -34,6 +38,7 @@ export default {
     Side_BarComponent,
     Nav_Bar,
     MenuList,
+    AlertLogout,
   },
 
   computed: {
@@ -41,7 +46,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(["isLoggedIn"]),
+    showAlert() {
+      this.isVisisible = true;
+    },
+    closeModal() {
+      this.isVisisible = false;
+    },
   },
 };
 </script>
@@ -94,5 +104,13 @@ export default {
   background-color: #333;
   color: white;
   text-align: center;
+}
+#btn-out {
+  font-size: 20px;
+  padding: 4px;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-right: 10px;
+  border: none;
 }
 </style>

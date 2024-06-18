@@ -2,7 +2,7 @@
 import axios from "axios"
 import { BASE_URL } from "@/services/Serviceshttp"
 
-const token = localStorage.getItem('token')
+const token = sessionStorage.getItem('token')
 
 export const deleteProduct = async (id) => {
     try {

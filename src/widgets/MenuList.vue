@@ -1,8 +1,10 @@
 <template>
   <div class="d-block mx-auto" style="width: 600px">
     <ul class="d-flex justify-content-between p-2 text-white list" id="list-menu">
-      <li v-for="ls in list" :key="ls.Id" @click="handleClick(ls.Name_List)">
-        <button>{{ ls.Name_List }}</button>
+      <li v-for="ls in list" :key="ls.Id">
+        <router-link :to="getRoute(ls.Name_List)">
+          <button>{{ ls.Name_List }}</button>
+        </router-link>
       </li>
     </ul>
   </div>
@@ -27,33 +29,33 @@ export default {
   },
 
   methods: {
-    handleClick(name) {
-      if (name === this.options.home) {
-        this.$router.push({ name: "home" });
-      } else {
-        if (name === this.options.product) {
-          this.$router.push({ name: "productos" });
-        } else {
-          if (name === this.options.contact) {
-            this.$router.push({ name: "contact" });
-          } else {
-            if (name === this.options.about) {
-              this.$router.push({ name: "about-us" }); //implementar ruta desde la database
-            }
-          }
-        }
+    getRoute(name) {
+      switch (name) {
+        case this.options.home:
+          return { name: "home" };
+        case this.options.product:
+          return { name: "productos" };
+        case this.options.contact:
+          return { name: "contact" };
+        case this.options.about:
+          return { name: "about-us" };
+        default:
+          return { name: "home" }; // Default route in case no match is found
       }
     },
 
-    async lodignItems() {
-      const result = await getList();
-      this.list = result;
-      console.log(result);
+    async loadingItems() {
+      try {
+        const result = await getList();
+        this.list = result;
+      } catch (error) {
+        console.error("Error loading menu items:", error);
+      }
     },
   },
 
   mounted() {
-    this.lodignItems();
+    this.loadingItems();
   },
 };
 </script>
@@ -68,6 +70,7 @@ export default {
   transition: 0.5s;
   cursor: pointer;
 }
+
 .list li button {
   background-color: transparent;
   border: none;

@@ -4,6 +4,7 @@ import AdmProd from '../pages/AdmProd.vue'
 import HomePage from '../pages/HomePage.vue'
 import ContactPage from '../pages/ContactPage.vue'
 import AboutPage from '../pages/AboutPage.vue'
+// import App from '@/App.vue'
 
 function isAuthenticated() {
     return !!localStorage.getItem('token')
@@ -17,25 +18,25 @@ export const routers = new createRouter({
         component: LoginVue,
     },
     {
-        path: '/manage_products/home',
+        path: '/dashboard/home',
         name: 'home',
         component: HomePage,
         meta: { requiresAuth: true }
     },
     {
-        path: '/manage_products/products',
+        path: '/dashboard/products',
         name: 'productos',
         component: AdmProd,
         meta: { requiresAuth: true }
     },
     {
-        path: '/manage_products/contact',
+        path: '/dashboard/contact',
         name: 'contact',
         component: ContactPage,
         meta: { requiresAuth: true }
     },
     {
-        path: '/manage_products/about-us',
+        path: '/dashboard/about-us',
         name: 'about-us',
         component: AboutPage,
         meta: { requiresAuth: true }

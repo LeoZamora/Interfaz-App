@@ -2,11 +2,16 @@ import { createStore} from "vuex";
 
 export default createStore({
     state: {
-        isLoggedIn: false
+        isLoggedIn: !!localStorage.getItem('token')
     },
     mutations: {
         setLoginState(state, isLoggedIn) {
             state.isLoggedIn = isLoggedIn
+            if (isLoggedIn) {
+                localStorage.setItem('token', localStorage.getItem('token')); // Guardar token en localStorage
+            } else {
+                localStorage.removeItem('token'); // Eliminar token de localStorage
+            }
         }
     },
     actions: {
@@ -14,6 +19,7 @@ export default createStore({
             commit('setLoginState', true)
         },
         logout({commit}) {
+            localStorage.removeItem('token');
             commit('setLoginState', false)
         }
     },

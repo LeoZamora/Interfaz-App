@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade show"
-    tabindex="-1"
+    tabindex="1"
     role="dialog"
     style="display: block; background: rgba(0, 0, 0, 0.5)"
   >
@@ -9,22 +9,20 @@
       <div class="modal-content">
         <div class="modal-header d-flex justify-content-between">
           <h5 class="modal-title">
-            <i class="fas fa-exclamation-triangle text-warning"></i> Confirmación
+            <i class="fas fa-exclamation-triangle text-warning"></i>Confirmación
           </h5>
-          <button type="button" class="close btn" @click="closeAlert" aria-label="Close">
+          <button type="button" class="close btn" aria-label="Close" @click="closeAlert">
             <i class="bi bi-x-circle"></i>
           </button>
         </div>
         <div class="modal-body">
-          <p>¿Está seguro de que desea eliminar este artículo?</p>
+          <p>¿Está seguro de que desea cerrar sesion?</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" @click.prevent="closeAlert">
             Cancel
           </button>
-          <button type="button" class="btn btn-danger" @click="confirmDelete">
-            Delete
-          </button>
+          <button type="button" class="btn btn-danger" @click="confirmExit">Acept</button>
         </div>
       </div>
     </div>
@@ -32,35 +30,26 @@
 </template>
 
 <script>
-import { deleteProduct } from "@/controllers/Delete.controllers.js";
-
+import { mapActions } from "vuex";
 export default {
-  name: "AlertDelet",
-
-  props: ["Id"],
-
-  data() {
-    return {
-      idPd: this.Id,
-    };
-  },
+  name: "AlertLogout",
 
   methods: {
+    ...mapActions(["logout"]),
+
     closeAlert() {
       this.$emit("close");
     },
 
-    confirmDelete() {
-      this.closeAlert();
-      deleteProduct(this.idPd);
-      alert("Artículo eliminado");
+    confirmExit() {
+      try {
+        this.closeAlert();
+        this.logout();
+        this.$router.push({ name: "login" });
+      } catch (error) {
+        console.log("Error: ", error);
+      }
     },
   },
 };
 </script>
-
-<style scoped>
-.modal-dialog {
-  margin-top: 10%;
-}
-</style>

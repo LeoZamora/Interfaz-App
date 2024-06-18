@@ -10,6 +10,7 @@
         autocomplete="name"
         aria-placeholder="search"
         style="width: 300px"
+        @input="handleFilter"
       />
       <button @click.prevent="handleClick" id="btn-search" class="btn align-self-center">
         <i class="bi bi-search"></i>
@@ -33,6 +34,15 @@ export default {
 
   methods: {
     async handleClick() {
+      try {
+        const response = await getFilterProducts(this.nameFilter);
+        this.productFilter = response.data.filter.result;
+        this.$emit("filter-result", this.productFilter);
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    async handleFilter() {
       try {
         const response = await getFilterProducts(this.nameFilter);
         this.productFilter = response.data.filter.result;

@@ -3,8 +3,8 @@
     <div
       class="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top"
     >
-      <a
-        href="/"
+      <router-link
+        to="/"
         class="d-block p-2 link-dark text-decoration-none"
         title=""
         data-bs-toggle="tooltip"
@@ -12,7 +12,7 @@
         data-bs-original-title="Icon-only"
       >
         <i class="bi-bootstrap fs-3"></i>
-      </a>
+      </router-link>
       <ul
         class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center"
       >
